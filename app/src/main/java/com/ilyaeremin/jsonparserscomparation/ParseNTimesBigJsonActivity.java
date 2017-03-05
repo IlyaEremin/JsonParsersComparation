@@ -47,7 +47,7 @@ public class ParseNTimesBigJsonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        jsonString = Utils.readJsonAsStringFromDisk(this, R.raw.example);
+        jsonString = Utils.readJsonAsStringFromDisk(this, R.raw.big);
         gson = new Gson();
         mapper = new ObjectMapper();
         mapper.setVisibilityChecker(mapper.getVisibilityChecker()

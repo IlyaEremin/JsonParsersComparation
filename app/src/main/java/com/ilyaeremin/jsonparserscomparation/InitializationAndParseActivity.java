@@ -35,7 +35,7 @@ public class InitializationAndParseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        jsonString = Utils.readJsonAsStringFromDisk(this, R.raw.example);
+        jsonString = Utils.readJsonAsStringFromDisk(this, R.raw.big);
     }
 
     @OnClick(R.id.gson) void onGsonClick() {
