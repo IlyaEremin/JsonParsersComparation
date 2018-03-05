@@ -10,13 +10,13 @@ import java.lang.ref.ReferenceQueue;
  * Created by ereminilya on 5/3/17.
  */
 
-public class GcTracker {
+class GcTracker {
     @Nullable private Thread mThread;
 
     /**
      * Starts listening for GC_FOR_ALLOC events
      */
-    public void startListening() {
+    void startListening() {
         if (mThread != null) {
             return;
         }
@@ -54,7 +54,7 @@ public class GcTracker {
     /**
      * Stops listening for GC_FOR_ALLOC events
      */
-    public void stopListening() {
+    void stopListening() {
         if (mThread != null) {
             mThread.interrupt();
             mThread = null;

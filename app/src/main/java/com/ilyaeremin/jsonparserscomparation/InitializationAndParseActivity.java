@@ -48,7 +48,7 @@ public class InitializationAndParseActivity extends AppCompatActivity {
         try {
             long before = System.currentTimeMillis();
             ObjectMapper mapper = new ObjectMapper();
-            mapper.setVisibilityChecker(mapper.getVisibilityChecker()
+            mapper.setVisibility(mapper.getVisibilityChecker()
                 .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
                 .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
                 .withSetterVisibility(JsonAutoDetect.Visibility.NONE)

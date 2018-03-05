@@ -12,8 +12,8 @@ import java.io.InputStream;
  * Created by ereminilya on 22/2/17.
  */
 
-public class Utils {
-    public static String readJsonAsStringFromDisk(@NonNull Context context, @RawRes int rawRes) {
+class Utils {
+    static String readJsonAsStringFromDisk(@NonNull Context context, @RawRes int rawRes) {
         InputStream inputStream = context.getResources().openRawResource(rawRes);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
@@ -37,7 +37,7 @@ public class Utils {
      * @param task
      * @return times in millis how much time requered to do work
      */
-    public static long doNTimes(int times, Runnable task) {
+    static long doNTimes(int times, Runnable task) {
         long before = System.currentTimeMillis();
         for (int i = 0; i < times; i++) {
             task.run();
