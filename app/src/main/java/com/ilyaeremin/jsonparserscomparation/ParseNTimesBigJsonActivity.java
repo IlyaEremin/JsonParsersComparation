@@ -30,7 +30,7 @@ import butterknife.OnClick;
 
 public class ParseNTimesBigJsonActivity extends AppCompatActivity {
 
-    private static final int TIMES = 20;
+    private static final int TIMES = 1;
 
     private final Type HUMAN_LIST_GSON = new TypeToken<ArrayList<Human>>() {
     }.getType();
@@ -38,7 +38,6 @@ public class ParseNTimesBigJsonActivity extends AppCompatActivity {
     private String                   jsonString;
     private Gson                     gson;
     private ObjectMapper             mapper;
-    private Moshi                    moshi;
     private JsonAdapter<List<Human>> moshiAdapter;
     private GcTracker gcTracker;
 
@@ -50,12 +49,12 @@ public class ParseNTimesBigJsonActivity extends AppCompatActivity {
         jsonString = Utils.readJsonAsStringFromDisk(this, R.raw.big);
         gson = new Gson();
         mapper = new ObjectMapper();
-        mapper.setVisibilityChecker(mapper.getVisibilityChecker()
+        mapper.setVisibility(mapper.getVisibilityChecker()
             .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
             .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
             .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
             .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
-        moshi = new Moshi.Builder().build();
+        Moshi moshi = new Moshi.Builder().build();
         moshiAdapter = moshi.adapter(Types.newParameterizedType(List.class, Human.class));
 
         gcTracker = new GcTracker();

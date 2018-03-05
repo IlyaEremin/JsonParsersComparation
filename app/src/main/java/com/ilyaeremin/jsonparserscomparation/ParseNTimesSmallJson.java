@@ -31,49 +31,53 @@ import butterknife.OnClick;
 
 public class ParseNTimesSmallJson extends AppCompatActivity {
 
-    private static final int TIMES = 1000;
+    private static final int TIMES = 1;
 
     private final Type HUMAN_LIST_GSON = new TypeToken<ArrayList<SmallObject>>() {
     }.getType();
 
-    private String                         jsonString;
-    private Gson                           gson;
-    private ObjectMapper                   mapper;
-    private Moshi                          moshi;
+    private String jsonString;
+    private Gson gson;
+    private ObjectMapper mapper;
     private JsonAdapter<List<SmallObject>> moshiAdapter;
     private GcTracker gcTracker;
 
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         jsonString = Utils.readJsonAsStringFromDisk(this, R.raw.small);
         gson = new Gson();
         mapper = new ObjectMapper();
-        mapper.setVisibilityChecker(mapper.getVisibilityChecker()
-            .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
-            .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
-            .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
-            .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
-        moshi = new Moshi.Builder().build();
+        mapper.setVisibility(mapper.getVisibilityChecker()
+                .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
+                .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withSetterVisibility(JsonAutoDetect.Visibility.NONE)
+                .withCreatorVisibility(JsonAutoDetect.Visibility.NONE));
+        Moshi moshi = new Moshi.Builder().build();
         moshiAdapter = moshi.adapter(Types.newParameterizedType(List.class, Human.class));
         gcTracker = new GcTracker();
         gcTracker.startListening();
     }
 
 
-    @OnClick(R.id.gson) void onGsonClick() {
+    @OnClick(R.id.gson)
+    void onGsonClick() {
         printToast(Utils.doNTimes(TIMES, new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 List<Human> humanList = gson.fromJson(jsonString, HUMAN_LIST_GSON);
             }
         }));
     }
 
-    @OnClick(R.id.jackson) void onJacksonClick() {
+    @OnClick(R.id.jackson)
+    void onJacksonClick() {
         printToast(Utils.doNTimes(TIMES, new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 try {
                     List<SmallObject> humanList = Arrays.asList(mapper.readValue(jsonString, SmallObject[].class));
                 } catch (IOException e) {
@@ -84,9 +88,11 @@ public class ParseNTimesSmallJson extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.moshi) void onMoshiClick() {
+    @OnClick(R.id.moshi)
+    void onMoshiClick() {
         printToast(Utils.doNTimes(TIMES, new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 try {
                     List<SmallObject> humans = moshiAdapter.fromJson(jsonString);
                 } catch (IOException e) {
@@ -96,9 +102,11 @@ public class ParseNTimesSmallJson extends AppCompatActivity {
         }));
     }
 
-    @OnClick(R.id.ason) void onAsonClick() {
+    @OnClick(R.id.ason)
+    void onAsonClick() {
         printToast(Utils.doNTimes(TIMES, new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 List<Human> humans = Ason.deserializeList(jsonString, Human.class);
             }
         }));
@@ -109,7 +117,8 @@ public class ParseNTimesSmallJson extends AppCompatActivity {
         System.out.println(millis);
     }
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         gcTracker.stopListening();
         super.onDestroy();
     }
